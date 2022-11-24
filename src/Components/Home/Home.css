@@ -1,0 +1,28 @@
+.userBox {
+  background-color: rgb(86, 141, 189);
+  width: 400px;
+  margin: auto;
+  border: 3px solid white;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.userDetail {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.editButton {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: aqua;
+  cursor: pointer;
+}
+
+.details {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
