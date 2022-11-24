@@ -36,7 +36,7 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "/register",
+        "https://server-delta-dusky.vercel.app/register",
         {
           email: registerDetails.email,
           password: registerDetails.password,

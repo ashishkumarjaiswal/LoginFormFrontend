@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
 // import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
+  const [cookies, setCookie] = useCookies(["token"]);
+
   const [loginDetails, setLoginDetails] = useState({
     email: "",
     password: "",
@@ -24,7 +27,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const { data } = await axios.post(
-        "/login",
+        "https://server-delta-dusky.vercel.app/login",
         { email: loginDetails.email, password: loginDetails.password },
         {
           headers: {
@@ -34,9 +37,12 @@ const Login = () => {
       );
 
       setError(data.msg);
+      setCookie("token", data.token, { path: "/" });
 
       setTimeout(() => {
-        window.location.reload();
+        if (data.msg === "Login Successfully") {
+          window.location.reload();
+        }
       }, 1000);
     } catch (error) {
       setError(error.response.data.msg);

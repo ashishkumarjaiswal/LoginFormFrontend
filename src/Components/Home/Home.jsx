@@ -26,7 +26,7 @@ const Home = () => {
   const handleOnUpdate = async (e) => {
     try {
       const { data } = await axios.post(
-        "/updateProfile",
+        "https://server-delta-dusky.vercel.app/updateProfile",
         {
           mobileNumber: userDetails.mobileNumber,
           name: userDetails.name,
@@ -49,7 +49,10 @@ const Home = () => {
   const [isEditable, setIsEditable] = useState(false);
 
   const getUserDetails = async () => {
-    const { data } = await axios.get("/getUserData");
+    const { data } = await axios.get(
+      "https://server-delta-dusky.vercel.app/getUserData",
+      { withCredentials: true }
+    );
     setUserDetails(data.user);
   };
 
@@ -130,7 +133,7 @@ const Home = () => {
             <button
               className="editButton"
               onClick={async () => {
-                await axios.get("/logout");
+                await axios.get("https://server-delta-dusky.vercel.app/logout");
                 window.location.reload();
               }}
             >

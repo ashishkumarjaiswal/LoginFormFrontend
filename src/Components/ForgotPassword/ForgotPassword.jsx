@@ -40,7 +40,7 @@ const ForgotPassword = () => {
 
     try {
       const { data } = await axios.post(
-        "/forgotPassword",
+        "https://server-delta-dusky.vercel.app/forgotPassword",
         {
           email: registerDetails.email,
           newPassword: registerDetails.newPassword,
