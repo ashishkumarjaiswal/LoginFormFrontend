@@ -2,8 +2,11 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
+
   const [registerDetails, setRegisterDetails] = useState({
     name: "",
     place: "",
@@ -35,6 +38,8 @@ const Register = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const { data } = await axios.post(
         "https://server-delta-dusky.vercel.app/register",
         {
@@ -52,11 +57,14 @@ const Register = () => {
       );
 
       setError(data.msg);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError(error.response.data.msg);
       console.log(error);
     }
   };
+
   return (
     <>
       <div className="login-form">
@@ -114,14 +122,22 @@ const Register = () => {
               </Link>
             </div>
           </div>
-      <div
-        style={{ color: "red", backgroundColor: "white", textAlign: "center" }}
-      >
-        {error}
-      </div>
-          <div className="action">
-            <button>Register</button>
+          <div
+            style={{
+              color: "red",
+              backgroundColor: "white",
+              textAlign: "center",
+            }}
+          >
+            {error}
           </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="action">
+              <button>Register</button>
+            </div>
+          )}
         </form>
       </div>
     </>

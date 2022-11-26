@@ -4,9 +4,13 @@ import "./Login.css";
 import axios from "axios";
 // import { useEffect } from "react";
 import { useCookies } from "react-cookie";
+import Loader from "../Loader/Loader";
 
 const Login = () => {
+  // eslint-disable-next-line
   const [cookies, setCookie] = useCookies(["token"]);
+
+  const [loading, setLoading] = useState(false);
 
   const [loginDetails, setLoginDetails] = useState({
     email: "",
@@ -25,6 +29,7 @@ const Login = () => {
 
   const handleOnClick = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const { data } = await axios.post(
         "https://server-delta-dusky.vercel.app/login",
@@ -38,6 +43,7 @@ const Login = () => {
 
       setError(data.msg);
       setCookie("token", data.token, { path: "/" });
+      setLoading(false);
 
       setTimeout(() => {
         if (data.msg === "Login Successfully") {
@@ -45,6 +51,7 @@ const Login = () => {
         }
       }, 1000);
     } catch (error) {
+      setLoading(false);
       setError(error.response.data.msg);
       console.log(error);
     }
@@ -62,6 +69,7 @@ const Login = () => {
                 type="email"
                 placeholder="Email"
                 name="email"
+                required
                 onChange={(e) => handleOnChange(e)}
                 value={loginDetails.email}
               />
@@ -71,6 +79,7 @@ const Login = () => {
                 type="password"
                 placeholder="Password"
                 name="password"
+                required
                 onChange={(e) => handleOnChange(e)}
               />
             </div>
@@ -92,9 +101,13 @@ const Login = () => {
           >
             {error}
           </div>
-          <div className="action">
-            <button type="submit">Login</button>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="action">
+              <button type="submit">Login</button>
+            </div>
+          )}
         </form>
       </div>
     </>

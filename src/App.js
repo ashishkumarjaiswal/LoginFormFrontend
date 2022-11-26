@@ -9,8 +9,9 @@ import { useState } from "react";
 // import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 
+
 const App = () => {
-  const [cookies] = useCookies(["access_token"]);
+  const [cookies] = useCookies(["token"]);
 
   const [isAuth, setIsAuth] = useState(
     cookies.token === undefined ? false : true

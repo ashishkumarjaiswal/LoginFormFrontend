@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 import "./ForgotPassword.css";
 
 const ForgotPassword = () => {
@@ -10,6 +11,8 @@ const ForgotPassword = () => {
     mobileNumber: "",
     newPassword: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,6 +42,8 @@ const ForgotPassword = () => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const { data } = await axios.post(
         "https://server-delta-dusky.vercel.app/forgotPassword",
         {
@@ -55,7 +60,9 @@ const ForgotPassword = () => {
       );
 
       setError(data.msg);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       setError(error.response.data.msg);
       console.log(error);
     }
@@ -96,7 +103,7 @@ const ForgotPassword = () => {
             </div>
             <div className="input-field">
               <input
-                type="newPassword"
+                type="password"
                 placeholder="New Password"
                 name="newPassword"
                 onChange={(e) => handleOnChange(e)}
@@ -118,9 +125,13 @@ const ForgotPassword = () => {
           >
             {error}
           </div>
-          <div className="action">
-            <button>Update Password</button>
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="action">
+              <button>Update Password</button>
+            </div>
+          )}
         </form>
       </div>
     </div>
