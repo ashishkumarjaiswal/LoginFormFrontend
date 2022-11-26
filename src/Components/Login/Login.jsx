@@ -52,8 +52,6 @@ const Login = () => {
 
   return (
     <>
-          <div>ashish</div>
-
       <div className="login-form">
         <form method="POST" onSubmit={(e) => handleOnClick(e)}>
           <h1>Login</h1>
