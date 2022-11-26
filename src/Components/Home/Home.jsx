@@ -62,7 +62,6 @@ const Home = () => {
 
   return (
     <>
-      <div>ashish</div>
       <div className="details">
         <div className="userBox">
           <h2 style={{ textAlign: "center" }}>User Detail</h2>
